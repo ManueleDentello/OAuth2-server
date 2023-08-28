@@ -1,66 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>OAuth Authenticate</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/mdb.min.css" />
 </head>
-<body class='container'>
-  <h1>Authentication on OAuth Server</h1>
-  <form action='/oauth/authorize' method="post">
-    <p hidden>These inputs should be hidden in production</p>
-    <div class='form-group' hidden>
-      <label>Client Id</label>
-      <input class='form-control' name='client_id'/ readonly>
+
+<body>
+  <section class="vh-100" style="background-color: #1d1d1d;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-flex">
+                <img src="assets/sample.png" alt="login form" class="img-fluid object-cover"
+                  style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+
+                  <form action='/oauth/authorize' method="post">
+
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-gamepad fa-2x me-3" style="color: #ff6219;"></i>
+                      <span class="h1 fw-bold mb-0">Games finder</span>
+                    </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                    <div class="form-outline mb-4">
+                      <input type="text" name="username" id="username" class="form-control form-control-lg" required />
+                      <label class="form-label" for="username">Username</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="Password" name="password" id="password" class="form-control form-control-lg"
+                        required />
+                      <label class="form-label" for="password">Password</label>
+                    </div>
+
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                    </div>
+
+                    <a class="small text-muted" href="#!">Forgot password?</a>
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
+                        style="color: #393f81;">Register here</a></p>
+                    <a href="#!" class="small text-muted">Terms of use.</a>
+                    <a href="#!" class="small text-muted">Privacy policy</a>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class='form-group' hidden>
-      <label>Redirect Uri</label>
-      <input class='form-control' name='redirect_uri'/ readonly>
-    </div>
-    <div class='form-group' hidden>
-      <label>Response Type</label>
-      <input class='form-control' name='response_type'/ readonly>
-    </div>
-    <div class='form-group' hidden>
-      <label>Grant Type</label>
-      <input class='form-control' name='grant_type'/ readonly>
-    </div>
-    <div class='form-group' hidden>
-      <label>State</label>
-      <input class='form-control' name='state'/ readonly>
-    </div>
-    <p hidden>Any other inputs are used to help validate the client, run other custom actions on the server, etc...</p>
-    <div class="form-group">
-      <label>Username</label>
-      <input class='form-control auth' type="text" name="username" required>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input class='form-control auth' type="Password" name="password"/ required>
-    </div>
-    <input type='submit' class='btn btn-success' />
-  </form>
+  </section>
+
   <script>
-  ;(function(){
-    const urlParams = new URLSearchParams(window.location.search)
-    ;['client_id','redirect_uri', 'response_type', 'grant_type', 'state', 'username'].forEach(type => {
-      const input = document.body.querySelector(`input[name=${type}]`)
-      const value = urlParams.get(type)
-      input.value = value
-    })
-    const error = urlParams.get('error') === 'true'
-    const succes = urlParams.get('success') === 'false'
-    const user = urlParams.get('user') === 'false'
-    if(user) {
-      window.alert("User is not registered")
-    }
-    else if(succes) {
-      window.alert("Password is not correct")
-    }
-    else if(error) {
-      window.alert("Server error")
-    }
-  }())
+    ; (function () {
+      const urlParams = new URLSearchParams(window.location.search)
+        ;['client_id', 'redirect_uri', 'response_type', 'grant_type', 'state', 'username'].forEach(type => {
+          const input = document.body.querySelector(`input[name=${type}]`)
+          const value = urlParams.get(type)
+          input.value = value
+        })
+      const error = urlParams.get('error') === 'true'
+      const succes = urlParams.get('success') === 'false'
+      const user = urlParams.get('user') === 'false'
+      if (user) {
+        window.alert("User is not registered")
+      }
+      else if (succes) {
+        window.alert("Password is not correct")
+      }
+      else if (error) {
+        window.alert("Server error")
+      }
+    }())
   </script>
+
+  <script type="text/javascript" src="js/mdb.min.js"></script>
 </body>
+
 </html>
