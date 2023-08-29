@@ -60,7 +60,7 @@ router.post('/token', (req,res,next) => {
   next();
 }, oauthServer.token())  // Sends back token
 
-// Send user info back
+// like /secure but it returns the name
 router.get('/username', (req, res, next) => {
   DebugControl.log.flow('Get username');
   next();
