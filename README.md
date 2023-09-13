@@ -20,7 +20,7 @@ Example of an Oauth 2.0 server written in Nodejs. The server is based on Oauth2-
 The Oauth 2.0 Server require a MongoDB connection. The DB structure can be seen in `utilities/DB`.
 In order to provide the connection string, you have to create a file called `.env` and insert with this structure
 ```bash
-CONNECTSTRING = mongodb://127.0.0.1:1234
+CONNECTSTRING = mongodb://127.0.0.1:1234/dbname
 ```
 Keep in mind that writing "localhost" will not work for some reason.
 

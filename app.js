@@ -1,7 +1,7 @@
 const express = require('express')
 
 const app = express()
-const port = 443
+const port = 8443
 const bodyParser = require('body-parser')
 const oauthServer = require('./oauth/server.js')
 
@@ -33,7 +33,7 @@ app.use('/secure', (req,res,next) => {
   // Se autentica e va tutto bene rimanda alla route definita in ./routes/secure.js
 }, oauthServer.authenticate(), require('./routes/secure.js')) // routes to access the protected stuff
 
-http.createServer(app).listen(80)
+http.createServer(app).listen(8080)
 https.createServer({
   key: fs.readFileSync('./cert/server.key'),
   cert: fs.readFileSync('./cert/server.cert'),
