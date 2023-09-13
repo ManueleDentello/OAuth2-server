@@ -40,7 +40,7 @@ router.post('/authorize', (req,res,next) => {
   
   // this is for logging of the flow
   DebugControl.log.flow('authorize')
-  console.log('Body: ' + req.body.username);
+  //console.log('Body: ' + req.body.username);
   return next()
   },
 
