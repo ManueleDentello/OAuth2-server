@@ -40,7 +40,7 @@ router.post('/authorize', (req,res,next) => {
   
   // this is for logging of the flow
   DebugControl.log.flow('authorize')
-  console.log('Body: ' + req.body.username);
+  //console.log('Body: ' + req.body.username);
   return next()
   },
 
@@ -60,7 +60,7 @@ router.post('/token', (req,res,next) => {
   next();
 }, oauthServer.token())  // Sends back token
 
-// Send user info back
+// like /secure but it returns the name
 router.get('/username', (req, res, next) => {
   DebugControl.log.flow('Get username');
   next();
