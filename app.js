@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 
 const app = express()
 const port = 443
@@ -14,6 +15,7 @@ const fs = require('fs')
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(DebugControl.log.request())
 
