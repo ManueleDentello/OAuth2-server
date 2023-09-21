@@ -18,8 +18,8 @@
           <div class="card" style="border-radius: 1rem;">
             <div class="row g-0">
               <div class="col-md-6 col-lg-5 d-none d-md-flex">
-                <img src="/assets/oauth_logo.png" alt="login form" class="img-fluid object-contain"
-                  style="border-radius: 1rem 0 0 1rem;" />
+                <img src="/assets/oauth_logo.png" alt="login form" class="img-fluid"
+                  style="border-radius: 1rem 0 0 1rem; object-fit:contain" />
               </div>
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
@@ -27,31 +27,20 @@
                   <form action='/client/register' method="post">
 
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <i class="fas fa-gamepad fa-2x me-3" style="color: #ff6219;"></i>
-                      <span class="h1 fw-bold mb-0">Games finder</span>
+                      <span class="h1 fw-bold mb-0" style="text-align: center">OAuth Server</span>
                     </div>
 
-                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Client registration on the server</h5>
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Registra un nuovo client</h5>
 
                     <div class="form-outline mb-4">
-                      <input type='url' name="redirect-uri" id="redirect-uri" class="form-control form-control-lg auth"
+                      <input type='url' name="redirect_uri" id="redirect-uri" class="form-control form-control-lg auth"
                         required />
                       <label class="form-label" for="name">Redirect URI</label>
                     </div>
 
-                    <div class="form-outline mb-4">
-                      <input type='text' pattern='^((authorization_code;)?(refresh_token;)?){1}$' name="grant"
-                        id="grant" class="form-control form-control-lg auth" required />
-                      <label class="form-label" for="username">Grant type, format:
-                        "authorization_code;refresh_token;"</label>
-                    </div>
-
                     <div class="pt-1 mb-4 mt-3">
-                      <button class="btn btn-dark btn-lg btn-block" type="submit" id="submit">Register</button>
+                      <button class="btn btn-dark btn-lg btn-block" type="submit" id="submit">Registra</button>
                     </div>
-
-                    <a href="#!" class="small text-muted">Terms of use.</a>
-                    <a href="#!" class="small text-muted">Privacy policy</a>
                   </form>
 
                 </div>

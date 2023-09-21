@@ -19,8 +19,8 @@
           <div class="card" style="border-radius: 1rem;">
             <div class="row g-0">
               <div class="col-md-6 col-lg-5 d-none d-md-flex">
-                <img src="/assets/oauth_logo.png" alt="login form" class="img-fluid object-cover"
-                  style="border-radius: 1rem 0 0 1rem;" />
+                <img src="/assets/oauth_logo.png" alt="login form" class="img-fluid"
+                  style="border-radius: 1rem 0 0 1rem;object-fit:contain" />
               </div>
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
@@ -28,15 +28,14 @@
                   <form action='/user/register' method="post">
 
                     <div class="d-flex align-items-center mb-3 pb-1">
-                      <i class="fas fa-gamepad fa-2x me-3" style="color: #ff6219;"></i>
-                      <span class="h1 fw-bold mb-0">Games finder</span>
+                      <span class="h1 fw-bold mb-0">OAuth Server</span>
                     </div>
 
-                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create a new account</h5>
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Crea un nuovo utente</h5>
 
                     <div class="form-outline mb-4">
                       <input type="text" name="name" id="name" class="form-control form-control-lg auth" required />
-                      <label class="form-label" for="name">Name</label>
+                      <label class="form-label" for="name">Nome</label>
                     </div>
 
                     <div class="form-outline mb-4">
@@ -52,21 +51,16 @@
                     </div>
 
                     <div class="form-outline mb-4">
-                      <input type="Password" name="confirm-password" id="confirm-password"
+                      <input type="Password" name="confirm" id="confirm_password"
                         class="form-control form-control-lg auth" onkeyup='check();' required />
-                      <label class="form-label" for="confirm-password">Confirm password</label>
+                      <label class="form-label" for="confirm_password">Conferma password</label>
                     </div>
 
                     <span id='message'></span>
 
                     <div class="pt-1 mb-4 mt-3">
-                      <button class="btn btn-dark btn-lg btn-block" type="submit" id="submit" disabled>Register</button>
+                      <button class="btn btn-dark btn-lg btn-block" type="submit" id="submit" disabled>Registra</button>
                     </div>
-
-                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="#!"
-                        style="color: #393f81;">Login here</a></p>
-                    <a href="#!" class="small text-muted">Terms of use.</a>
-                    <a href="#!" class="small text-muted">Privacy policy</a>
                   </form>
 
                 </div>
@@ -81,7 +75,7 @@
   <script type="text/javascript">
     let check = function () {
       if (document.getElementById('password').value ==
-        document.getElementById('confirm-password').value && document.getElementById('password').value) {
+        document.getElementById('confirm_password').value && document.getElementById('password').value) {
         document.getElementById('message').innerHTML = '';
         document.getElementById('submit').disabled = false;
       } else {
