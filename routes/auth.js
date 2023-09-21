@@ -57,7 +57,7 @@ router.post('/token', (req,res,next) => {
   next();
 }, oauthServer.token())  // Sends back token
 
-// like /secure but it returns a protected resource (the username)
+// like /secure: first authentication, then if ok send the protected resource (the username)
 router.get('/username', (req, res, next) => {
   DebugControl.log.flow('Get username');
   next();
