@@ -1,16 +1,11 @@
 const express = require('express')
 const path = require('path')
-
 const app = express()
-const port = 8443
 const bodyParser = require('body-parser')
 const oauthServer = require('./oauth/server.js')
-
 const DebugControl = require('./utilities/debug.js')
-
 const http = require('http')
 const https = require('https')
-
 const fs = require('fs')
 
 //Here we are configuring express to use body-parser as middle-ware.
@@ -25,21 +20,24 @@ app.all('*', function(req, res, next){
   res.redirect(307, 'https://' + req.hostname + req.url)
 })
 
-app.use('/client', require('./routes/client.js')) // Client routes
-app.use('/user', require('./routes/user.js')) // user routes
-app.use('/oauth', require('./routes/auth.js')) // routes to access the auth stuff
+/* routes */
+app.use('/client', require('./routes/client.js'))
+app.use('/user', require('./routes/user.js'))
+app.use('/oauth', require('./routes/auth.js'))
+
 // Note that the next router uses middleware. That protects all routes within this middleware
 app.use('/secure', (req,res,next) => {
   DebugControl.log.flow('Authentication')
   return next();
   // Se autentica e va tutto bene rimanda alla route definita in ./routes/secure.js
-}, oauthServer.authenticate(), require('./routes/secure.js')) // routes to access the protected stuff
+}, oauthServer.authenticate(), require('./routes/secure.js')) // route to access the protected stuff
 
 http.createServer(app).listen(8080)
+console.log("Oauth Server listening on port 8080")
 https.createServer({
   key: fs.readFileSync('./cert/server.key'),
   cert: fs.readFileSync('./cert/server.cert'),
 }, app).listen(port)
-console.log("Oauth Server listening on port ", port)
+console.log("Oauth Server listening on port 8443")
 
 module.exports = app // For testing
