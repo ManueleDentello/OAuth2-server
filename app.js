@@ -37,7 +37,7 @@ console.log("Oauth Server listening on port 8080")
 https.createServer({
   key: fs.readFileSync('./cert/server.key'),
   cert: fs.readFileSync('./cert/server.cert'),
-}, app).listen(port)
+}, app).listen(8443)
 console.log("Oauth Server listening on port 8443")
 
 module.exports = app // For testing
