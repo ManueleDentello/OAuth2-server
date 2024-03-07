@@ -1,16 +1,13 @@
 const path = require('path') // has path and __dirname
 const express = require('express')
 const functions = require('../utilities/supportFunctions')
-
 const DebugControl = require('../utilities/debug.js')
-
 const oauthServer = require('../oauth/server')
-
 const router = express.Router() // Instantiate a new router
-
 const filePath = path.join(__dirname, '../public/oauthAuthenticate.html')
 
-router.get('/authorize', (req,res) => {  // send back a simple form for the oauth
+// send back a simple form for the oauth
+router.get('/authorize', (req,res) => {  
   res.sendFile(filePath)
 })
 
@@ -18,7 +15,7 @@ router.get('/authorize', (req,res) => {  // send back a simple form for the oaut
 router.post('/authorize', (req,res,next) => {
   functions.authenticateUser(req.body.username, req.body.password, function(err, result){
     if (!result || err) {
-      const params = [ // Send params back down
+      const params = [ // Send params back to client in the form
       'client_id',
       'redirectUri',
       'response_type',
@@ -28,6 +25,7 @@ router.post('/authorize', (req,res,next) => {
       ]
       .map(a => `${a}=${req.body[a]}`)
       .join('&')
+      
       // error handling: if something's broke, keep the user in the same page, signaling the error
       if (err === 'User is not registered') res.redirect(`/oauth/authorize?user=false&${params}`)
       else if (!result) res.redirect(`/oauth/authorize?success=false&${params}`)
@@ -40,11 +38,10 @@ router.post('/authorize', (req,res,next) => {
   
   // this is for logging of the flow
   DebugControl.log.flow('authorize')
-  //console.log('Body: ' + req.body.username);
   return next()
   },
 
-  // consider req.body.username as the user identifier for the authentication
+  // req.body.username is considered as the user identifier for the authentication
   oauthServer.authorize({
     authenticateHandler: {
       handle: req => {
@@ -60,7 +57,7 @@ router.post('/token', (req,res,next) => {
   next();
 }, oauthServer.token())  // Sends back token
 
-// like /secure but it returns the name
+// like /secure: first authentication, then if ok send the protected resource (the username)
 router.get('/username', (req, res, next) => {
   DebugControl.log.flow('Get username');
   next();
