@@ -1,6 +1,5 @@
 # OAuth2-server
-Example of an Oauth 2.0 server written in Nodejs. The server is based on Oauth2-server (https://www.npmjs.com/package/oauth2-server) and express-oauth-server
-(https://www.npmjs.com/package/express-oauth-server) and supports authorization_code grant and refresh_token grant.
+This is an Oauth 2.0 server implementation written in Node.js as a PoC for the Security of Web Oriented Architectures course. The server is based on [Oauth2-server](https://www.npmjs.com/package/oauth2-server) and [express-oauth-server](https://www.npmjs.com/package/express-oauth-server). Authorization_code and refresh_token grants are supported.
 
 <a id='install'></a>
 # Installation and Setup
@@ -9,8 +8,6 @@ Example of an Oauth 2.0 server written in Nodejs. The server is based on Oauth2-
 1. `cd` into the project root folder, and run `npm install`
     - If `npm` is not installed, install it and then run `npm install`
 1. Run `npm start` to boot up the Oauth 2.0 Server
-1. Run `npm test` to run unit tests that cover all implemented grants
-    - For verbose output, modify `level` in `tests/setup.js` to be `DebugControl.levels.ALL`
 
 [back](#top)
 
@@ -22,7 +19,7 @@ In order to provide the connection string, you have to create a file called `.en
 ```bash
 CONNECTSTRING = mongodb://127.0.0.1:1234/dbname
 ```
-Keep in mind that writing "localhost" will not work for some reason.
+Keep in mind that writing "localhost" instead of 127.0.0.1 will not work for some reason.
 
 [back](#top)
 
@@ -46,7 +43,7 @@ Once everything is set up the Server is able to handle these requests:
 1. User registration
 3. Get Authorization Code
 4. Get Token
-5. Get Access to Protected Resource
+5. Get Access to Protected Resource (the username)
 
 This section will outline how each of these requests ought to be formatted to successfully go through.
 
@@ -55,16 +52,15 @@ This section will outline how each of these requests ought to be formatted to su
 <a id='url-client'></a>
 ### Client registration
 
-The request to register a client is one of the simplest requiring a GET on the URL `/client/register`. The Server will send back a form to compile with the redirect URI and the grant types.
-Grant types must be specified as a set of semicolon separated values, as an example: `authorization_code;refresh_token;` is a valid string.
-The server will validate the form and send back a `client_id` and a `client_secret`.
+The request to register a client consists of a GET on the URL `/client/register`. The Server will send back a form to compile with the redirect URI.
+The server will validate the form and send back a `client_id` and a `client_secret`. If you are using my [OAuth client](https://github.com/ManueleDentello/oauth_game_finder), save them in the .env file to permit the client to authenticate to the server when logging in.
 
 [back](#top)
 
 <a id='url-user'></a>
 ### User registration
 
-The request to register a user is one of the simplest requiring a GET on the URL `/user/register`. The Server will send back a form to compile with the username, password and name of the user.
+The request to register a user is a simple GET on the URL `/user/register`. The Server will send back a form to compile with the username, password and name of the user.
 The server will validate the form and send back a success or error message.
 
 [back](#top)
@@ -74,10 +70,10 @@ The server will validate the form and send back a success or error message.
 
 The request for an authorization code can be made using a GET on the url `/oauth/authorize`. It requires the following information:
 
-- client_id // The unique string identifying a client
-- redirect_uri // The place to redirect after receiving the code
-- response_type // what the client is expecting. Should be `code`
-- state // Provided by the client to prevent CSRF
+- `client_id`: The unique string identifying a client
+- `redirect_uri`: The place to redirect after receiving the code
+- `response_type`: What the client is expecting. Should be "code"
+- `state`: Provided by the client to prevent CSRF
 
 These parameters have to be sent as URL Query Parameters like this: `/oauth/authorize?client_id=<ID>&redirect_uri=<URL>&response_type=code&state=<STATE>`
 
@@ -88,20 +84,15 @@ The server will respond with an error or a redirect to the redirect_uri.
 <a id='url-token'></a>
 ### Token
 
-The request for an access token can be made using a POST on the url `/oauth/token`. It requires the following information:
+The request for an access token can be made using a POST on the url `/oauth/token`. It requires the following information (provided within the body of the request):
 
-- client_id // Unique string of client
-- client_secret // client secret key
-- grant_type // authorization_code in this example
-- code //the authorization code of prevoius step
-- redirect_uri //redirect uri provided in the previous step 
+- `client_id`
+- `client_secret`
+- `grant_type`: "authorization_code" in this example
+- `code`: The authorization code of previous step`
+- `redirect_uri`
 
-The request should additionally have the following header:
-
-`'Content-Type': 'application/x-www-form-urlencoded'`
-
-and the data must be provided within the body of a post request.
-
+The request should additionally have the header `'Content-Type': 'application/x-www-form-urlencoded'`
 The server will respond with an access token and a refresh token.
 
 [back](#top)
@@ -109,20 +100,15 @@ The server will respond with an access token and a refresh token.
 <a id='url-token'></a>
 ### Refresh Token
 
-The request for a new refreshed access token can be made using a POST on the url `/oauth/token`. It requires the following information:
+The request for a new refreshed access token can be made using the same POST on the url `/oauth/token` (data in the body of the request), but swapping the `code` for `refresh_token` parameter:
 
-- client_id // Unique string of client
-- client_secret // client secret key
-- grant_type // refresh_token
-- refresh_token //the refresh token associated with the access token
-- redirect_uri //redirect uri provided in the previous step 
+- `client_id`
+- `client_secret`
+- `grant_type`
+- `refresh_token`: The refresh token associated with the expiring access token
+- `redirect_uri`
 
-The request should additionally have the following header:
-
-`'Content-Type': 'application/x-www-form-urlencoded'`
-
-and the data must be provided within the body of a post request.
-
+The request should additionally have the following header: `'Content-Type': 'application/x-www-form-urlencoded'`
 The server will respond with an access token and a new refresh token.
 
 [back](#top)
@@ -139,5 +125,7 @@ An example of access to protected reosurce can be simulated using a GET on the U
 ```
 
 The server will respond with a positive messagge in case of a correct request.
+
+Also, for the sake of the project, the `/username` has been created with the same logic: The server will respond with the username of the logged user.
 
 [back](#top)
