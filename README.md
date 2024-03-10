@@ -5,9 +5,12 @@ This is an Oauth 2.0 server implementation written in Node.js as a PoC for the S
 # Installation and Setup
 
 1. Clone this Repo
-1. `cd` into the project root folder, and run `npm install`
+2. `cd` into the project root folder, and run `npm install`
     - If `npm` is not installed, install it and then run `npm install`
-1. Run `npm start` to boot up the Oauth 2.0 Server
+3. Rename `.env.example` to `.env` and fill it with all parameters
+4. Generate certificate and key for SSL support (see below)
+5. Run `npm start` to boot up the Oauth 2.0 Server
+use `https:localhost:8443` or Postman to call endpoints
 
 [back](#top)
 
@@ -53,7 +56,7 @@ This section will outline how each of these requests ought to be formatted to su
 ### Client registration
 
 The request to register a client consists of a GET on the URL `/client/register`. The Server will send back a form to compile with the redirect URI.
-The server will validate the form and send back a `client_id` and a `client_secret`. If you are using my [OAuth client](https://github.com/ManueleDentello/oauth_game_finder), save them in the .env file to permit the client to authenticate to the server when logging in.
+The server will validate the form and send back a `client_id` and a `client_secret`. If you are using my [OAuth client](https://github.com/ManueleDentello/oauth_game_finder), save them in the .env file to permit the client to authenticate to the server when logging in. If you are using HTTP for testing purposes on the OAuth client, make sure to register the appropriate URI.
 
 [back](#top)
 
@@ -126,6 +129,6 @@ An example of access to protected reosurce can be simulated using a GET on the U
 
 The server will respond with a positive messagge in case of a correct request.
 
-Also, for the sake of the project, the `/username` has been created with the same logic: The server will respond with the username of the logged user.
+Also, to demonstrate the complete OAuth flow, the `/username` endpoint has been created with the same logic: The server will respond with the username of the logged user.
 
 [back](#top)
